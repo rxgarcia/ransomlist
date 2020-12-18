@@ -1,0 +1,47 @@
+.inputMain {
+    z-index: 1;
+    background: none;
+    position: fixed;
+    top: 60px;
+    margin-left: 2.5%;
+    width: 100%;
+}
+
+.button {
+    z-index: 1;
+    font-size: small;
+    color: white;
+    background-color: rgba(67, 89, 117, 0.445);
+    border: 0;
+    border-radius: 0.1rem;
+    padding: 0.6rem 0.8rem;
+}
+
+.inputBar {
+    z-index: 1;
+    background-color: rgba(67, 89, 117, 0.445);
+    color: white;
+    border: 0;
+    margin-left: 10px;
+    border-radius: 0.1rem;
+    width: 30%;
+    height: 40px;
+    padding: 0rem 1rem;
+}
+
+.dateTime {
+    z-index: 1;
+    margin-left: 10px;
+    color: white;
+    height: 40px;
+}
+
+.listMain {
+    margin-left: 60px;
+}
+
+.today {
+    z-index: 0;
+    color: white;
+    margin-top: 20px;
+}

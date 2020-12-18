@@ -4,10 +4,12 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {NavBar} from './navBar.js';
+import {InputTask} from './ToDoList.js';
 
 ReactDOM.render(
   <React.StrictMode>
     <NavBar />
+    <InputTask />
     <App />
   </React.StrictMode>,
   document.getElementById('root')
