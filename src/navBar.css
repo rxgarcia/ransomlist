@@ -1,0 +1,26 @@
+.header {
+    background: none;
+    font-size: small;
+    margin-top: -10px;
+    margin-bottom: -40px;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+}
+
+.title {
+    color: whitesmoke;
+    text-align: right;
+    margin-right: 30px;
+    margin-bottom: -20px;
+}
+
+.navLinks a {
+    color: whitesmoke;
+    text-decoration: none;
+    font-size: medium;
+    margin-top: -50px;
+    vertical-align: top;
+    display: inline-flex;
+    padding: 20px;
+}
