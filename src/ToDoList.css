@@ -1,5 +1,4 @@
 .inputMain {
-    z-index: 1;
     background: none;
     position: fixed;
     top: 60px;
@@ -8,7 +7,6 @@
 }
 
 .button {
-    z-index: 1;
     font-size: small;
     color: white;
     background-color: rgba(67, 89, 117, 0.445);
@@ -18,7 +16,6 @@
 }
 
 .inputBar {
-    z-index: 1;
     background-color: rgba(67, 89, 117, 0.445);
     color: white;
     border: 0;
@@ -30,18 +27,31 @@
 }
 
 .dateTime {
-    z-index: 1;
     margin-left: 10px;
     color: white;
     height: 40px;
 }
 
-.listMain {
-    margin-left: 60px;
+.todoList {
+    margin-left: 2.5%;
+    margin-top: 2.5%;
+    font-size: 30px;
+    font-family: inherit;
+    color: white;
 }
 
-.today {
-    z-index: 0;
-    color: white;
-    margin-top: 20px;
+.theList {
+    font-size: medium;
+    list-style: none;
+    padding-left: 0;
+    width: 250px;
 }
+
+.todoList .theList li {
+    color: #333;
+    background-color: rgba(255,255,255,.5);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    list-style: none;
+  }

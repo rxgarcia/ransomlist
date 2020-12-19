@@ -7,6 +7,7 @@ export class InputTask extends React.Component {
         super(props);
         this.state = { items: [] };
         this.addItem = this.addItem.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
     }
 
     addItem(e) {
@@ -15,11 +16,24 @@ export class InputTask extends React.Component {
                 text: this._inputElement.value,
                 key: Date.now()
             };
-            this.state.items.push(newItem);
+            this.setState((prevState) => {
+                return {
+                    items: prevState.items.concat(newItem)
+                };
+            });
             this._inputElement.value = "";
-            e.preventDefault();
         }
         console.log(this.state.items);
+        e.preventDefault();
+    }
+
+    deleteItem(key) {
+        var filteredItems = this.state.items.filter(function(item) {
+            return (item.key !== key);
+        });
+        this.setState({
+            items: filteredItems
+        });
     }
 
 
@@ -35,7 +49,9 @@ export class InputTask extends React.Component {
                     <DateTimePicker className ="dateTime" />
                 </div>
                 <div className="todoList">
-                    <ToDoList entries={this.state.items} />
+                    Today
+                    {console.log("loggin state before ToDoList: " + this.state.items)}
+                    <ToDoList entries={this.state.items} delete={this.deleteItem}/>
                 </div>
             </div>
         )
@@ -44,13 +60,34 @@ export class InputTask extends React.Component {
 
 
 export class ToDoList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.createTasks = this.createTasks.bind(this);
+    }
+
+    delete(key) {
+        this.props.delete(key);
+    }
+
+    createTasks(item) {
+        return <li onClick={() => this.delete(item.key)} key={item.key}>{item.text}</li>
+    }
+
     render() {
-        return (
-            <div className="listMain">
-                    <h1 className="today">
-                        Today
-                    </h1>
-            </div>
-        )
+        var todoEntries = this.props.entries;
+        var listItems = todoEntries.map(this.createTasks);
+        if (listItems.length !== 0) {
+            return (
+                <ul className="theList">
+                    {listItems}
+                </ul>
+            );
+        } else {
+            return (
+                <ul className="theList">
+                    Nothing 😎
+                </ul>
+            )
+        }
     }
 }
