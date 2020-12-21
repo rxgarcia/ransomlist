@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './ToDoList.css';
 import DateTimePicker from 'react-datetime-picker';
+import Countdown from 'react-countdown';
 
 export class InputTask extends React.Component {
+
+    
     constructor(props) {
         super(props);
         this.state = { items: [] };
@@ -14,8 +17,10 @@ export class InputTask extends React.Component {
         if (this._inputElement.value !== "") {
             var newItem = {
                 text: this._inputElement.value,
-                key: Date.now()
+                key: Date.now(),
+                countdown: <Countdown date={Date.now() + 200000} />
             };
+            console.log("here: " + newItem.countdown);
             this.setState((prevState) => {
                 return {
                     items: prevState.items.concat(newItem)
@@ -36,7 +41,6 @@ export class InputTask extends React.Component {
         });
     }
 
-
     render() {
         return (
             <div className="inputMain">
@@ -46,11 +50,12 @@ export class InputTask extends React.Component {
                     </button>
                     <input className="inputBar" placeholder="Here" ref={ (a) => this._inputElement = a}>
                     </input>
-                    <DateTimePicker className ="dateTime" />
+                    <DateTimePicker
+                        className ="dateTime"
+                        returnValue="end"/>
                 </div>
                 <div className="todoList">
                     Today
-                    {console.log("loggin state before ToDoList: " + this.state.items)}
                     <ToDoList entries={this.state.items} delete={this.deleteItem}/>
                 </div>
             </div>
@@ -70,7 +75,9 @@ export class ToDoList extends React.Component {
     }
 
     createTasks(item) {
-        return <li onClick={() => this.delete(item.key)} key={item.key}>{item.text}</li>
+        return <li onClick={() => this.delete(item.key)} key={item.key} className={false ? "redTask" : "normalTask"}>
+            {item.text} {item.countdown}
+            </li>
     }
 
     render() {
