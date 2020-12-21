@@ -9,27 +9,8 @@ export class InputTask extends React.Component {
     constructor(props) {
         super(props);
         this.state = { items: [] };
-        this.addItem = this.addItem.bind(this);
         this.deleteItem = this.deleteItem.bind(this);
-    }
-
-    addItem(e) {
-        if (this._inputElement.value !== "") {
-            var newItem = {
-                text: this._inputElement.value,
-                key: Date.now(),
-                countdown: <Countdown date={Date.now() + 200000} />
-            };
-            console.log("here: " + newItem.countdown);
-            this.setState((prevState) => {
-                return {
-                    items: prevState.items.concat(newItem)
-                };
-            });
-            this._inputElement.value = "";
-        }
-        console.log(this.state.items);
-        e.preventDefault();
+        this.enterTask = this.enterTask.bind(this);
     }
 
     deleteItem(key) {
@@ -41,18 +22,21 @@ export class InputTask extends React.Component {
         });
     }
 
+    enterTask(task) {
+        this.setState((prevState) => {
+            return {
+                items: prevState.items.concat(task)
+            };
+        });
+        console.log(this.state.items);
+    }
+    
+
     render() {
         return (
             <div className="inputMain">
                 <div className="inputButton">
-                    <button onClick={this.addItem} className="button" type="submit">
-                        Enter a New Task! 📝
-                    </button>
-                    <input className="inputBar" placeholder="Here" ref={ (a) => this._inputElement = a}>
-                    </input>
-                    <DateTimePicker
-                        className ="dateTime"
-                        returnValue="end"/>
+                    <InputBar enterTask={this.enterTask} />
                 </div>
                 <div className="todoList">
                     Today
@@ -76,7 +60,7 @@ export class ToDoList extends React.Component {
 
     createTasks(item) {
         return <li onClick={() => this.delete(item.key)} key={item.key} className={false ? "redTask" : "normalTask"}>
-            {item.text} {item.countdown}
+            {item.taskName} {item.timeLeft}
             </li>
     }
 
@@ -96,5 +80,56 @@ export class ToDoList extends React.Component {
                 </ul>
             )
         }
+    }
+}
+
+
+class InputBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            taskName:"",
+            timeLeft:"",
+            key:""
+        };
+        this.handleTaskName = this.handleTaskName.bind(this);
+        this.handleTimeChange = this.handleTimeChange.bind(this);
+        this.addItem = this.addItem.bind(this);
+    }
+
+    handleTaskName(event) {
+        this.setState({
+            "taskName" : [event.target.value]
+        });
+    }
+
+    handleTimeChange(event) {
+        const num = Number(event.target.value) * 1000;
+        console.log(num);
+        this.setState({
+            "timeLeft" : <Countdown date={Date.now() + num} />
+        })
+    }
+
+    addItem() {
+        if (this.state.taskName != "") {
+            this.state.key = Date.now();
+            console.log(this.state);
+            this.props.enterTask(this.state);
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                <button onClick={this.addItem} className="button" type="submit">
+                    Enter a New Task! 📝
+                </button>
+                <input className="inputBar" placeholder="Task Name" name="taskName" onChange={this.handleTaskName}>
+                </input>
+                <input className="timeLeft" placeholder="Time Left" name="timeLeft" onChange={this.handleTimeChange}>
+                </input>
+            </div>
+        )
     }
 }
